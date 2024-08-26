@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="50dp"
+        android:padding="12dp">
 
         <Switch
             android:id="@+id/switchHappiness"
@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Giving"
+            android:text="Happiness"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -37,7 +37,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="50dp"
+        android:padding="12dp">
 
         <Switch
             android:id="@+id/switchOptimism"
@@ -65,7 +66,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="end|center_vertical"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="50dp"
+        android:padding="12dp">
 
         <Switch
             android:id="@+id/switchKindness"
@@ -94,7 +96,8 @@
         android:orientation="vertical"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="100dp"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="50dp"
+        android:padding="12dp">
 
         <Switch
             android:id="@+id/switchGiving"
@@ -123,7 +126,8 @@
         android:orientation="vertical"
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="50dp"
+        android:padding="12dp">
 
         <Switch
             android:id="@+id/switchRespect"
@@ -152,7 +156,8 @@
         android:orientation="vertical"
         android:layout_gravity="end|center_vertical"
         android:layout_marginTop="100dp"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="50dp"
+        android:padding="12dp">
 
         <Switch
             android:id="@+id/switchEgo"

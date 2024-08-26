@@ -5,26 +5,4 @@
         android:id="@+id/homeFragment"
         android:title="Home"
         android:icon="@drawable/ic_home"/>
-
-    <item
-        android:id="@+id/happinessFragment"
-        android:title="Happiness"
-        android:icon="@drawable/ic_happiness"/>
-
-    <item
-        android:id="@+id/optimismFragment"
-        android:title="Optimism"
-        android:icon="@drawable/ic_optimism"/>
-
-    <item
-        android:id="@+id/kindnessFragment"
-        android:title="Kindness"
-        android:icon="@drawable/ic_kindness"/>
-
-    <item
-        android:id="@+id/givingFragment"
-        android:title="Giving"
-        android:icon="@drawable/ic_giving"/>/>
-
-
 </menu>
