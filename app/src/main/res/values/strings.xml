@@ -141,4 +141,10 @@
     <string name="giving_text3">Kişisel olarak, verme eylemi de bireyin kendini geliştirmesine katkıda bulunur. Yardım etmek, kişinin kendini daha anlamlı hissetmesine ve yaşamında bir amaç bulmasına yardımcı olabilir. Verme eylemi, bireyde şükran duygusunu artırır ve kişisel tatmin sağlar. Ayrıca, başkalarına yardım etme, bireyin kendine olan güvenini ve kişisel değerini artırabilir.</string>
     <string name="giving_mini_title4">Verme ve Sürdürülebilirlik</string>
     <string name="giving_text4">Verme, sadece bireysel ve toplumsal düzeyde değil, aynı zamanda çevresel ve ekonomik düzeyde de önemlidir. Sürdürülebilirlik ilkeleri çerçevesinde, kaynakların paylaşımı ve adil dağılımı, gezegenimizin korunmasına katkıda bulunur. Verme eylemi, doğal kaynakların daha verimli kullanılmasını ve çevresel etkilerin azaltılmasını teşvik eder.</string>
+    <string name="happiness">Happiness</string>
+    <string name="optimism">Optimism</string>
+    <string name="kindness">Kindness</string>
+    <string name="giving">Giving</string>
+    <string name="respect">Respect</string>
+    <string name="ego">Ego</string>
 </resources>

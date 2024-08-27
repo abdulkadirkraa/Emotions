@@ -1,6 +1,7 @@
 package com.abdulkadirkara.emotions.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
@@ -18,7 +19,6 @@ import com.abdulkadirkara.emotions.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -30,22 +30,36 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        binding.apply {
-            setContentView(root)
-            setSupportActionBar(toolBar)
-            navController = (supportFragmentManager
-                .findFragmentById(navHostFragment.id) as NavHostFragment)
-                .navController
-        }
+        getNavControllerViaFragment()
+        Log.e("EGO","mainactivity-onCreate navControllerVia çağrım sonrası")
+    }
 
+    private fun getNavControllerViaFragment() {
+        val navHostFragmentView =
+            supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
+        val navController = navHostFragmentView.navController
+
+        binding.bottomNavigationView.setupWithNavController(navController)
+        Log.e("EGO","mainactivity-getNavControllerViaFragment sonu")
     }
 
     fun toggleBottomNavigationView(items: List<Int>) {
         if (items.isEmpty()) {
             binding.bottomNavigationView.visibility = View.GONE
+            Log.e("EGO","mainactivity-toggleBottomNavigationView items is empty")
         } else {
             binding.bottomNavigationView.menu.clear()
             binding.bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu) // Inflate the default menu
+
+            // HomeFragment her zaman eklenecek
+//            binding.bottomNavigationView.menu.add(
+//                Menu.NONE,
+//                R.id.homeFragment,
+//                Menu.NONE,
+//                "Home"
+//            ).setIcon(R.drawable.ic_home)
+            Log.e("EGO","mainactivity-toggleBottomNavigationView items not empty")
+
             items.forEach { item ->
                 when (item) {
                     R.id.happinessFragment -> binding.bottomNavigationView.menu.add(
@@ -83,8 +97,13 @@ class MainActivity : AppCompatActivity() {
                         "Respect"
                     ).setIcon(R.drawable.ic_respect)
                 }
+                Log.e("EGO","mainactivity-toggleBottomNavigationView when sonu")
             }
+            Log.e("EGO","mainactivity-toggleBottomNavigationView foreach sonu")
             binding.bottomNavigationView.visibility = View.VISIBLE
+            Log.e("EGO","mainactivity-toggleBottomNavigationView else sonu")
         }
+        Log.e("EGO","mainactivity-toggleBottomNavigationView sonu")
     }
+
 }

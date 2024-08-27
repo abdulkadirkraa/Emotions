@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -17,15 +19,16 @@
             android:layout_height="wrap_content"
             android:track="@drawable/switch_track"
             android:thumb="@drawable/switch_thumb"
-            android:showText="true"
             android:layout_margin="8dp"
             android:checked="false"
-            android:clickable="false"/>
+            android:clickable="false"
+            android:layout_gravity="center"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Happiness"
+            android:text="@string/happiness"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -46,15 +49,16 @@
             android:layout_height="wrap_content"
             android:track="@drawable/switch_track"
             android:thumb="@drawable/switch_thumb"
-            android:showText="true"
             android:layout_margin="8dp"
             android:checked="false"
-            android:clickable="false"/>
+            android:clickable="false"
+            android:layout_gravity="center"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Optimism"
+            android:text="@string/optimism"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -75,15 +79,16 @@
             android:layout_height="wrap_content"
             android:track="@drawable/switch_track"
             android:thumb="@drawable/switch_thumb"
-            android:showText="true"
             android:layout_margin="8dp"
             android:checked="false"
-            android:clickable="false"/>
+            android:clickable="false"
+            android:layout_gravity="center"
+            tools:ignore="UseSwitchCompatOrMaterialXml"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kindness"
+            android:text="@string/kindness"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -97,6 +102,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginTop="100dp"
         android:layout_marginBottom="50dp"
+        android:layout_marginStart="10dp"
         android:padding="12dp">
 
         <Switch
@@ -105,15 +111,16 @@
             android:layout_height="wrap_content"
             android:track="@drawable/switch_track"
             android:thumb="@drawable/switch_thumb"
-            android:showText="true"
             android:layout_margin="8dp"
             android:checked="false"
-            android:clickable="false"/>
+            android:clickable="false"
+            android:layout_gravity="center"
+            tools:ignore="UseSwitchCompatOrMaterialXml"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Giving"
+            android:text="@string/giving"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -135,15 +142,16 @@
             android:layout_height="wrap_content"
             android:track="@drawable/switch_track"
             android:thumb="@drawable/switch_thumb"
-            android:showText="true"
             android:layout_margin="8dp"
             android:checked="false"
-            android:clickable="false"/>
+            android:clickable="false"
+            android:layout_gravity="center"
+            tools:ignore="UseSwitchCompatOrMaterialXml"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Respect"
+            android:text="@string/respect"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -165,14 +173,15 @@
             android:layout_height="wrap_content"
             android:track="@drawable/switch_track"
             android:thumb="@drawable/switch_thumb"
-            android:showText="true"
             android:layout_margin="8dp"
-            android:checked="true"/>
+            android:checked="true"
+            android:layout_gravity="center"
+            tools:ignore="UseSwitchCompatOrMaterialXml"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ego"
+            android:text="@string/ego"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:textStyle="bold"
