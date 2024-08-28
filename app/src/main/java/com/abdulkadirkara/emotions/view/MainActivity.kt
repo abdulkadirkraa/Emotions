@@ -4,13 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.abdulkadirkara.emotions.R
@@ -29,7 +26,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         getNavControllerViaFragment()
         Log.e("EGO","mainactivity-onCreate navControllerVia çağrım sonrası")
     }
@@ -46,20 +42,9 @@ class MainActivity : AppCompatActivity() {
     fun toggleBottomNavigationView(items: List<Int>) {
         if (items.isEmpty()) {
             binding.bottomNavigationView.visibility = View.GONE
-            Log.e("EGO","mainactivity-toggleBottomNavigationView items is empty")
         } else {
             binding.bottomNavigationView.menu.clear()
-            binding.bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu) // Inflate the default menu
-
-            // HomeFragment her zaman eklenecek
-//            binding.bottomNavigationView.menu.add(
-//                Menu.NONE,
-//                R.id.homeFragment,
-//                Menu.NONE,
-//                "Home"
-//            ).setIcon(R.drawable.ic_home)
-            Log.e("EGO","mainactivity-toggleBottomNavigationView items not empty")
-
+            binding.bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu) // Inflate default menu
             items.forEach { item ->
                 when (item) {
                     R.id.happinessFragment -> binding.bottomNavigationView.menu.add(
@@ -97,13 +82,8 @@ class MainActivity : AppCompatActivity() {
                         "Respect"
                     ).setIcon(R.drawable.ic_respect)
                 }
-                Log.e("EGO","mainactivity-toggleBottomNavigationView when sonu")
             }
-            Log.e("EGO","mainactivity-toggleBottomNavigationView foreach sonu")
             binding.bottomNavigationView.visibility = View.VISIBLE
-            Log.e("EGO","mainactivity-toggleBottomNavigationView else sonu")
         }
-        Log.e("EGO","mainactivity-toggleBottomNavigationView sonu")
     }
-
 }
