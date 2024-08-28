@@ -8,13 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.abdulkadirkara.emotions.R
 import com.abdulkadirkara.emotions.databinding.FragmentHomeBinding
 import com.abdulkadirkara.emotions.viewmodel.HomeFragmentViewModel
 
 class HomeFragment : Fragment() {
+    // View'u saklayacağımız bir alan tanımlıyoruz
+    private var rootView: View? = null
 
-    private val viewModel = HomeFragmentViewModel()
+    private var viewModel = HomeFragmentViewModel()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -23,14 +26,22 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        Log.e("EGO","homefragment-onCreateView sonu")
-        return binding.root
+        // Eğer rootView null ise, yeni bir View şişiriyoruz ve binding'i başlatıyoruz
+        if (rootView == null) {
+            rootView = binding.root
+
+            // Burada diğer başlatma işlemleri yapılabilir
+            Log.e("EGO", "homefragment-onCreateView: Yeni View oluşturuldu")
+        } else {
+            Log.e("EGO", "homefragment-onCreateView: Eski View kullanıldı")
+        }
+        // rootView'u geri döndürüyoruz
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("EGO","homefragment-onViewCreated bası")
         setupSwitches()
         Log.e("EGO","homefragment-onViewCreated setupSwitched cagrım sonu")
         observeViewModel()
@@ -41,18 +52,20 @@ class HomeFragment : Fragment() {
         // BottomNavigationView'i güncelle
         viewModel.navigationItems.value?.let { updateBottomNavigationView(it) }
         Log.e("EGO","homefragment-onViewCreated updateBottomNavigationView cagrım sonu")
-
     }
+
     override fun onResume() {
         super.onResume()
-        Log.e("EGO","homefragment-onResume bası")
         // Switch ve BottomNavigationView durumlarını yeniden yükle
+        viewModel.isEgoChecked.value?.let { isEgoChecked ->
+            updateOtherSwitchesBasedOnEgo(isEgoChecked)
+            Log.e("EGO","homefragment-onResume updateOtherSwitchesBasedOnEgo cagrım sonu")
+        }
         viewModel.navigationItems.value?.let { updateBottomNavigationView(it) }
         Log.e("EGO","homefragment-onResume updateBottomNavigationView cagrım sonu")
     }
     private fun setupSwitches() {
         // Switchleri ViewBinding ile bul
-        Log.e("EGO","homefragment-setupSwitches bası")
         with(binding) {
             switchEgo.isChecked = viewModel.isEgoChecked.value ?: false
             switchHappiness.isChecked = false
@@ -61,18 +74,16 @@ class HomeFragment : Fragment() {
             switchGiving.isChecked = false
             switchRespect.isChecked = false
         }
-        Log.e("EGO","homefragment-setupSwitches sonu")
+        Log.e("EGO","homefragment-setupSwitches")
     }
 
     private fun observeViewModel() {
-        Log.e("EGO","homefragment-observeViewModel bası")
         viewModel.isEgoChecked.observe(viewLifecycleOwner, Observer { isChecked ->
             Log.e("EGO","homefragment-observeViewModel isEgoChecked")
             binding.switchEgo.isChecked = isChecked
             Log.e("EGO","homefragment-observeViewModel isEgoChecked switchEgo.isChecked")
             updateBottomNavigationView()
             Log.e("EGO","homefragment-observeViewModel isEgoChecked updateBottomNavigationView")
-
         })
 
         viewModel.areSwitchesClickable.observe(viewLifecycleOwner, Observer { isClickable ->
@@ -81,32 +92,30 @@ class HomeFragment : Fragment() {
         })
 
         viewModel.areSwitchesChecked.observe(viewLifecycleOwner, Observer { areChecked ->
-            Log.e("EGO","homefragment-observeViewModel areSwitchesChecked bası")
             setSwitchesChecked(areChecked)
-            Log.e("EGO","homefragment-observeViewModel areSwitchesChecked sonu")
+            Log.e("EGO","homefragment-observeViewModel areSwitchesChecked")
         })
         viewModel.navigationItems.observe(viewLifecycleOwner, Observer { items ->
-            Log.e("EGO","homefragment-observeViewModel navigationItems bası")
             updateBottomNavigationView(items)
-            Log.e("EGO","homefragment-observeViewModel navigationItems sonu")
+            Log.e("EGO","homefragment-observeViewModel navigationItems")
         })
 
         // Maksimum öğe sayısına ulaşıldığında mesaj göster
         viewModel.maxItemsReachedMessage.observe(viewLifecycleOwner, { isMaxReached ->
-            Log.e("EGO","homefragment-observeViewModel maxItemsReachedMessage bası")
             if (isMaxReached) {
                 Toast.makeText(requireActivity(), "Maksimum 5 item ekleyebilirsiniz.", Toast.LENGTH_SHORT).show()
                 viewModel.resetMaxItemsReachedMessage() // Mesajı sıfırla
                 Log.e("EGO","homefragment-observeViewModel maxItemsReachedMessage reset")
             }
-            Log.e("EGO","homefragment-observeViewModel maxItemsReachedMessage sonu")
+            Log.e("EGO","homefragment-observeViewModel maxItemsReachedMessage")
         })
     }
 
     private fun setupSwitchListeners() {
-        Log.e("EGO","homefragment-setupSwitchListeners bası")
         binding.switchEgo.setOnCheckedChangeListener { _, isChecked ->
             viewModel.onEgoSwitchChanged(isChecked)
+            // switchEgo değiştiğinde diğer switch'lerin durumunu güncelle
+            updateOtherSwitchesBasedOnEgo(isChecked)
             Log.e("EGO","homefragment-setupSwitchListeners switchEgo onEgoSwitchChanged")
         }
         binding.switchHappiness.setOnCheckedChangeListener { _, isChecked ->
@@ -130,9 +139,31 @@ class HomeFragment : Fragment() {
             Log.e("EGO","homefragment-setupSwitchListeners switchRespect onOtherSwitchChanged")
         }
     }
+    private fun updateOtherSwitchesBasedOnEgo(isEgoChecked: Boolean) {
+        with(binding) {
+            val switches = listOf(switchHappiness, switchOptimism, switchKindness, switchGiving, switchRespect)
+            switches.forEach { switch ->
+                if (isEgoChecked) {
+                    // Eğer switchEgo açık ise, diğer switch'leri kontrol et
+                    Log.e("EGO","homefragment-updateOtherSwitchesBasedOnEgo switchEgo açık")
+                    if (switch.isChecked) {
+                        Log.e("EGO","homefragment-updateOtherSwitchesBasedOnEgo $switch isChecked true -> flase")
+                        switch.isChecked = false
+                        viewModel.onOtherSwitchChanged(switch.id, false)
+                    }
+                } else {
+                    // Eğer switchEgo kapalı ise, diğer switch'lerin durumunu güncelle
+                    Log.e("EGO","homefragment-updateOtherSwitchesBasedOnEgo switchEgo kapalı")
+                    if (!switch.isChecked) {
+                        Log.e("EGO","homefragment-updateOtherSwitchesBasedOnEgo $switches isChecked false -> true")
+                        viewModel.onOtherSwitchChanged(switch.id, false)
+                    }
+                }
+            }
+        }
+    }
 
     private fun setSwitchesClickable(isClickable: Boolean) {
-        Log.e("EGO","homefragment-setSwitchesClickable bası")
         with(binding) {
             switchHappiness.isClickable = isClickable
             switchOptimism.isClickable = isClickable
@@ -140,11 +171,10 @@ class HomeFragment : Fragment() {
             switchGiving.isClickable = isClickable
             switchRespect.isClickable = isClickable
         }
-        Log.e("EGO","homefragment-setSwitchesClickable sonu")
+        Log.e("EGO","homefragment-setSwitchesClickable")
     }
 
     private fun setSwitchesChecked(isChecked: Boolean) {
-        Log.e("EGO","homefragment-setSwitchesChecked bası")
         with(binding) {
             switchHappiness.isChecked = isChecked
             switchOptimism.isChecked = isChecked
@@ -152,16 +182,16 @@ class HomeFragment : Fragment() {
             switchGiving.isChecked = isChecked
             switchRespect.isChecked = isChecked
         }
-        Log.e("EGO","homefragment-setSwitchesChecked sonu")
+        Log.e("EGO","homefragment-setSwitchesChecked")
     }
     private fun updateBottomNavigationView(items: List<Int> = emptyList()) {
-        Log.e("EGO","homefragment-updateBottomNavigationView bası")
         val mainActivity = activity as? MainActivity
         mainActivity?.toggleBottomNavigationView(items)
-        Log.e("EGO","homefragment-updateBottomNavigationView sonu")
+        Log.e("EGO","homefragment-updateBottomNavigationView")
     }
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.e("EGO","homefragment-onDestroyView bası")
         _binding = null
     }
 }
