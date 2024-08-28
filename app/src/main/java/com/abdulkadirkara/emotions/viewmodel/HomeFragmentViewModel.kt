@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.abdulkadirkara.emotions.R
 
 class HomeFragmentViewModel: ViewModel() {
-
     // Ego switch'in durumu
     private val _isEgoChecked = MutableLiveData<Boolean>()
     val isEgoChecked: LiveData<Boolean> get() = _isEgoChecked
@@ -36,43 +35,53 @@ class HomeFragmentViewModel: ViewModel() {
 
     fun onEgoSwitchChanged(isChecked: Boolean) {
         _isEgoChecked.value = isChecked
-        Log.e("EGO","viewmodel-onEgoSwitchChanged başı")
         if (isChecked) {
-            _areSwitchesClickable.value = false
-            _areSwitchesChecked.value = false
-            _navigationItems.value?.clear()
-            Log.e("EGO","viewmodel-onEgoSwitchChanged isChecked true ise yapıldı")
+            handleEgoSwitchChecked()
         } else {
-            _areSwitchesClickable.value = true
-            _navigationItems.value = mutableListOf(R.id.homeFragment) // "Home" öğesini ekliyoruz.
-            Log.e("EGO","viewmodel-onEgoSwitchChanged false ise yapıldı")
+            handleEgoSwitchUnchecked()
         }
-        _navigationItems.value = _navigationItems.value
-        Log.e("EGO","viewmodel-onEgoSwitchChanged sonu")
     }
-
 
     fun onOtherSwitchChanged(switchId: Int, isChecked: Boolean) {
         val items = _navigationItems.value ?: mutableListOf()
-        Log.e("EGO","viewmodel-onOtherSwitchChanged başı")
         if (isChecked) {
-            Log.e("EGO","viewmodel-onOtherSwitchChanged isCheckes true ise")
-            if (!items.contains(switchId) && items.size < 5) {
-                items.add(switchId)
-                Log.e("EGO","viewmodel-onOtherSwitchChanged item\'ların size\'ı 5\'ten küçük ise itema eklendi")
-            }else if (items.size >= 5) {
-                _maxItemsReachedMessage.value = true
-                Log.e("EGO","viewmodel-onOtherSwitchChanged item\'ların size\'ı 5\'ten büyük ise _maxItemsReachedMessage true")
-            }
+            handleSwitchChecked(switchId, items)
         } else {
-            items.remove(switchId)
-            Log.e("EGO","viewmodel-onOtherSwitchChanged isChecked false ise item remove")
+            handleSwitchUnchecked(switchId, items)
         }
         _navigationItems.value = items
-        Log.e("EGO","viewmodel-onOtherSwitchChanged sonu")
     }
+
     fun resetMaxItemsReachedMessage() {
         _maxItemsReachedMessage.value = false
         Log.e("EGO","viewmodel-resetMaxItemsReachedMessage")
+    }
+    private fun handleEgoSwitchChecked() {
+        _areSwitchesClickable.value = false
+        _areSwitchesChecked.value = false
+        clearNavigationItems()
+    }
+
+    private fun handleEgoSwitchUnchecked() {
+        _areSwitchesClickable.value = true
+        setHomeFragmentAsDefaultNavigationItem()
+    }
+
+    private fun clearNavigationItems() {
+        _navigationItems.value?.clear()
+    }
+
+    private fun setHomeFragmentAsDefaultNavigationItem() {
+        _navigationItems.value = mutableListOf(R.id.homeFragment)
+    }
+    private fun handleSwitchChecked(switchId: Int, items: MutableList<Int>) {
+        if (!items.contains(switchId) && items.size < 5) {
+            items.add(switchId)
+        } else if (items.size >= 5) {
+            _maxItemsReachedMessage.value = true
+        }
+    }
+    private fun handleSwitchUnchecked(switchId: Int, items: MutableList<Int>) {
+        items.remove(switchId)
     }
 }
