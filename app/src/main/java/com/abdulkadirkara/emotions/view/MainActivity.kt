@@ -15,7 +15,7 @@ import com.abdulkadirkara.emotions.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         getNavControllerViaFragment()
-        Log.e("EGO","mainactivity-onCreate navControllerVia çağrım sonrası")
     }
 
     private fun getNavControllerViaFragment() {
@@ -36,54 +35,45 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragmentView.navController
 
         binding.bottomNavigationView.setupWithNavController(navController)
-        Log.e("EGO","mainactivity-getNavControllerViaFragment sonu")
     }
 
     fun toggleBottomNavigationView(items: List<Int>) {
         if (items.isEmpty()) {
-            binding.bottomNavigationView.visibility = View.GONE
+            hideBottomNavigationView()
         } else {
-            binding.bottomNavigationView.menu.clear()
-            binding.bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu) // Inflate default menu
+            clearAndInflateMenu()
             items.forEach { item ->
                 when (item) {
-                    R.id.happinessFragment -> binding.bottomNavigationView.menu.add(
-                        Menu.NONE,
-                        R.id.happinessFragment,
-                        Menu.NONE,
-                        "Happiness"
-                    ).setIcon(R.drawable.ic_happiness)
-
-                    R.id.optimismFragment -> binding.bottomNavigationView.menu.add(
-                        Menu.NONE,
-                        R.id.optimismFragment,
-                        Menu.NONE,
-                        "Optimism"
-                    ).setIcon(R.drawable.ic_optimism)
-
-                    R.id.kindnessFragment -> binding.bottomNavigationView.menu.add(
-                        Menu.NONE,
-                        R.id.kindnessFragment,
-                        Menu.NONE,
-                        "Kindness"
-                    ).setIcon(R.drawable.ic_kindness)
-
-                    R.id.givingFragment -> binding.bottomNavigationView.menu.add(
-                        Menu.NONE,
-                        R.id.givingFragment,
-                        Menu.NONE,
-                        "Giving"
-                    ).setIcon(R.drawable.ic_giving)
-
-                    R.id.respectFragment -> binding.bottomNavigationView.menu.add(
-                        Menu.NONE,
+                    R.id.happinessFragment -> addMenuItem(R.id.happinessFragment,"Happiness",R.drawable.ic_happiness)
+                    R.id.optimismFragment -> addMenuItem(R.id.optimismFragment,"Optimism",R.drawable.ic_optimism)
+                    R.id.kindnessFragment -> addMenuItem(R.id.kindnessFragment,"Kindness",R.drawable.ic_kindness)
+                    R.id.givingFragment -> addMenuItem(R.id.givingFragment,"Giving",R.drawable.ic_giving)
+                    R.id.respectFragment -> addMenuItem(
                         R.id.respectFragment,
-                        Menu.NONE,
-                        "Respect"
-                    ).setIcon(R.drawable.ic_respect)
+                        "Respect",
+                        R.drawable.ic_respect
+                    )
                 }
             }
-            binding.bottomNavigationView.visibility = View.VISIBLE
+            showBottomNavigationView()
         }
+    }
+    fun hideBottomNavigationView() {
+        binding.bottomNavigationView.visibility = View.GONE
+    }
+    fun showBottomNavigationView() {
+        binding.bottomNavigationView.visibility = View.VISIBLE
+    }
+    fun clearAndInflateMenu() {
+        binding.bottomNavigationView.menu.clear()
+        binding.bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu)
+    }
+    fun addMenuItem(itemId: Int, title: String, iconResId: Int) {
+        binding.bottomNavigationView.menu.add(
+            Menu.NONE,
+            itemId,
+            Menu.NONE,
+            title
+        ).setIcon(iconResId)
     }
 }

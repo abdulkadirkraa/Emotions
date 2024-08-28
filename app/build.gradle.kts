@@ -53,10 +53,4 @@ dependencies {
     // Views/Fragments integration Navigation
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
-
-    // Mockito için
-    testImplementation(libs.mockito.core)
-
-    // LiveData ve ViewModel için testing kütüphaneleri
-    testImplementation(libs.androidx.core.testing)
 }
