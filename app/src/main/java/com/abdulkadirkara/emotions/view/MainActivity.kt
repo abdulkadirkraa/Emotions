@@ -1,7 +1,6 @@
 package com.abdulkadirkara.emotions.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -15,7 +14,7 @@ import com.abdulkadirkara.emotions.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -58,17 +57,17 @@ class MainActivity : AppCompatActivity() {
             showBottomNavigationView()
         }
     }
-    fun hideBottomNavigationView() {
+    private fun hideBottomNavigationView() {
         binding.bottomNavigationView.visibility = View.GONE
     }
-    fun showBottomNavigationView() {
+    private fun showBottomNavigationView() {
         binding.bottomNavigationView.visibility = View.VISIBLE
     }
-    fun clearAndInflateMenu() {
+    private fun clearAndInflateMenu() {
         binding.bottomNavigationView.menu.clear()
         binding.bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu)
     }
-    fun addMenuItem(itemId: Int, title: String, iconResId: Int) {
+    private fun addMenuItem(itemId: Int, title: String, iconResId: Int) {
         binding.bottomNavigationView.menu.add(
             Menu.NONE,
             itemId,
