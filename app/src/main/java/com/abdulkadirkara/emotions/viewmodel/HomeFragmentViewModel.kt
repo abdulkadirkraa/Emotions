@@ -1,6 +1,5 @@
 package com.abdulkadirkara.emotions.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -54,32 +53,32 @@ class HomeFragmentViewModel: ViewModel() {
     fun resetMaxItemsReachedMessage() {
         _maxItemsReachedMessage.value = false
     }
-    fun handleEgoSwitchChecked() {
+    private fun handleEgoSwitchChecked() {
         _areSwitchesClickable.value = false
         _areSwitchesChecked.value = false
         clearNavigationItems()
     }
 
-    fun handleEgoSwitchUnchecked() {
+    private fun handleEgoSwitchUnchecked() {
         _areSwitchesClickable.value = true
         setHomeFragmentAsDefaultNavigationItem()
     }
 
-    fun clearNavigationItems() {
+    private fun clearNavigationItems() {
         _navigationItems.value?.clear()
     }
 
-    fun setHomeFragmentAsDefaultNavigationItem() {
+    private fun setHomeFragmentAsDefaultNavigationItem() {
         _navigationItems.value = mutableListOf(R.id.homeFragment)
     }
-    fun handleSwitchChecked(switchId: Int, items: MutableList<Int>) {
+    private fun handleSwitchChecked(switchId: Int, items: MutableList<Int>) {
         if (!items.contains(switchId) && items.size < 5) {
             items.add(switchId)
         } else if (items.size >= 5) {
             _maxItemsReachedMessage.value = true
         }
     }
-    fun handleSwitchUnchecked(switchId: Int, items: MutableList<Int>) {
+    private fun handleSwitchUnchecked(switchId: Int, items: MutableList<Int>) {
         items.remove(switchId)
     }
 }
