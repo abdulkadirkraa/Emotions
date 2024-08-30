@@ -36,4 +36,7 @@ BottomNavigationBar’a eklenen her bir item’a tıklandığında kendi detay e
 Tüm ekranlarda Databinding ya da ViewBinding kullanılması gerekmektedir.
 
 ## Proje Videosu
-https://drive.google.com/file/d/1Krz5wekrcX1YlOiwmkaQf0VnCionQ2qN/view?usp=sharing
+
+https://github.com/user-attachments/assets/5bdae665-0c59-40d1-8e82-7e2325b6bfcc
+
+
