@@ -5,5 +5,9 @@
     <color name="green">#00FF00</color>
     <color name="red">#FF0000</color>
     <color name="grey">#8c8c8c</color>
-    <color name="bottomNavView">#BF4E2B</color>
+    <color name="happiness">#FFF9E5</color>
+    <color name="optimism">#FFE5CC</color>
+    <color name="kindess">#E5F4E3</color>
+    <color name="giving">#FFE5E9</color>
+    <color name="respect">#E5ECF4</color>
 </resources>

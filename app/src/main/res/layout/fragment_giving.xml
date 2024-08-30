@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.GivingFragment">
+    tools:context=".view.GivingFragment"
+    android:background="@color/giving">
 
     <ScrollView
         android:layout_margin="8dp"
