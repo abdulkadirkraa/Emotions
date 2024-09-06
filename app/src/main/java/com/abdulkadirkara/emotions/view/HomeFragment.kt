@@ -12,11 +12,8 @@ import com.abdulkadirkara.emotions.databinding.FragmentHomeBinding
 import com.abdulkadirkara.emotions.viewmodel.HomeFragmentViewModel
 
 class HomeFragment : Fragment() {
-    // View'u saklayacağımız bir alan tanımlıyoruz
-    private var rootView: View? = null
 
     private val viewModel = HomeFragmentViewModel()
-
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -26,154 +23,98 @@ class HomeFragment : Fragment() {
     ): View? {
         Log.e("EGO","HomeFragment-onCreateView")
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        // Eğer rootView null ise, yeni bir View şişiriyoruz ve binding'i başlatıyoruz
-        if (rootView == null) {
-            rootView = binding.root
-
-            // Burada diğer başlatma işlemleri yapılabilir
-        }
-        // rootView'u geri döndürüyoruz
-        return rootView
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("EGO","HomeFragment-onViewCreated rootView: ${rootView.toString()}")
-        setupSwitches()
         observeViewModel()
-        setupSwitchListeners()
 
-        // BottomNavigationView'i güncelle
-        viewModel.navigationItems.value?.let { updateBottomNavigationView(it) }
-    }
-    private fun setupSwitches() {
-        // Switchleri ViewBinding ile bul
         with(binding) {
-            switchEgo.isChecked = viewModel.isEgoChecked.value ?: false
-            switchHappiness.isChecked = false
-            switchOptimism.isChecked = false
-            switchKindness.isChecked = false
-            switchGiving.isChecked = false
-            switchRespect.isChecked = false
-            Log.e("EGO","HomeFragment-setupSwitches switchEgo: ${switchEgo.isChecked}")
-            Log.e("EGO","HomeFragment-setupSwitches switchRespect: ${switchRespect.isChecked}")
-        }
-    }
+            switchHappiness.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.setSwitchHappinessState(isChecked)
+            }
 
-    private fun onEgoCheckedChanged(isChecked: Boolean){
-        binding.switchEgo.isChecked = isChecked
-        Log.e("EGO","HomeFragment-onEgoCheckedChanged isChecked: $isChecked")
-        updateBottomNavigationView()
-    }
-    private fun onMaxItemsReachedChanged(isMaxReached: Boolean) {
-        if (isMaxReached) {
-            Toast.makeText(requireActivity(), "Maksimum 5 item ekleyebilirsiniz.", Toast.LENGTH_SHORT).show()
-            viewModel.resetMaxItemsReachedMessage() // Mesajı sıfırla
-        }
-    }
+            switchKindness.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.setSwitchKindnessState(isChecked)
+            }
 
-    private fun observeisEgoChecked() {
-        Log.e("EGO","HomeFragment-observeisEgoChecked")
-        viewModel.isEgoChecked.observe(viewLifecycleOwner,::onEgoCheckedChanged)
-    }
-    private fun observeAreSwitchesClickable() {
-        Log.e("EGO","HomeFragment-observeAreSwitchesClickable")
-        viewModel.areSwitchesClickable.observe(viewLifecycleOwner, ::setSwitchesClickable)
-    }
-    private fun observeAreSwitchesChecked() {
-        Log.e("EGO","HomeFragment-observeAreSwitchesChecked")
-        viewModel.areSwitchesChecked.observe(viewLifecycleOwner, ::setSwitchesChecked)
-    }
-    private fun observeNavigationItems() {
-        viewModel.navigationItems.observe(viewLifecycleOwner, ::updateBottomNavigationView)
-    }
-    private fun observeMaxItemsReachedMessage() {
-        viewModel.maxItemsReachedMessage.observe(viewLifecycleOwner, ::onMaxItemsReachedChanged)
+            switchOptimism.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.setSwitchOptimismState(isChecked)
+            }
+
+            switchGiving.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.setSwitchGivingState(isChecked)
+            }
+
+            switchRespect.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.setSwitchRespectState(isChecked)
+            }
+
+            switchEgo.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.setSwitchEgoState(isChecked)
+
+                if (isChecked) {
+                    setSwitchStatus(false)
+                    setIsCheckedToFalse()
+                } else {
+                    setSwitchStatus(true)
+                }
+            }
+        }
+
     }
 
     private fun observeViewModel() {
-        Log.e("EGO","HomeFragment-observeViewModel")
-        observeisEgoChecked()
-        observeAreSwitchesClickable()
-        observeAreSwitchesChecked()
-        observeNavigationItems()
-        observeMaxItemsReachedMessage()
-    }
-
-    private fun setupSwitchEgoListener() {
-        binding.switchEgo.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.onEgoSwitchChanged(isChecked)
-            Log.e("EGO","HomeFragment-setupSwitchEgoListener isChecked: $isChecked")
-            if (isChecked){
-                setSwitchesClickable(false)
-                setSwitchesChecked(false)
-                updateBottomNavigationView()
+        viewModel.isEgoState.observe(viewLifecycleOwner) { isEgoChecked ->
+            setSwitchStatus(!isEgoChecked)
+            if (isEgoChecked) {
+                setIsCheckedToFalse()
             }
         }
-    }
-    private fun setupSwitchHappinessListener() {
-        binding.switchHappiness.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.onOtherSwitchChanged(R.id.happinessFragment, isChecked)
+
+        viewModel.isHappinessState.observe(viewLifecycleOwner) { isChecked ->
+            binding.switchHappiness.isChecked = isChecked
         }
-    }
-    private fun setupSwitchOptimismListener() {
-        binding.switchOptimism.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.onOtherSwitchChanged(R.id.optimismFragment, isChecked)
+
+        viewModel.isOptimismState.observe(viewLifecycleOwner) { isChecked ->
+            binding.switchOptimism.isChecked = isChecked
         }
-    }
-    private fun setupSwitchKindnessListener(){
-        binding.switchKindness.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.onOtherSwitchChanged(R.id.kindnessFragment, isChecked)
+
+        viewModel.isKindnessState.observe(viewLifecycleOwner) { isChecked ->
+            binding.switchKindness.isChecked = isChecked
         }
-    }
-    private fun setupSwitchGivingListener(){
-        binding.switchGiving.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.onOtherSwitchChanged(R.id.givingFragment, isChecked)
+
+        viewModel.isGivingState.observe(viewLifecycleOwner) { isChecked ->
+            binding.switchGiving.isChecked = isChecked
         }
-    }
-    private fun setupSwitchRespectListener(){
-        binding.switchRespect.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.onOtherSwitchChanged(R.id.respectFragment, isChecked)
-            Log.e("EGO","HomeFragment-setupSwitchRespectListener isChecked: $isChecked")
+
+        viewModel.isRespectState.observe(viewLifecycleOwner) { isChecked ->
+            binding.switchRespect.isChecked = isChecked
         }
     }
 
-    private fun setupSwitchListeners() {
-        Log.e("EGO","HomeFragment-setupSwitchListeners")
-        setupSwitchEgoListener()
-        setupSwitchHappinessListener()
-        setupSwitchOptimismListener()
-        setupSwitchKindnessListener()
-        setupSwitchGivingListener()
-        setupSwitchRespectListener()
-    }
-
-    private fun setSwitchesClickable(isClickable: Boolean) {
+    private fun setSwitchStatus(status: Boolean) {
         with(binding) {
-            switchHappiness.isClickable = isClickable
-            switchOptimism.isClickable = isClickable
-            switchKindness.isClickable = isClickable
-            switchGiving.isClickable = isClickable
-            switchRespect.isClickable = isClickable
-            Log.e("EGO","HomeFragment-setSwitchesClickable isClickable: $isClickable")
+            switchRespect.isEnabled = status
+            switchGiving.isEnabled = status
+            switchKindness.isEnabled = status
+            switchOptimism.isEnabled = status
+            switchHappiness.isEnabled = status
         }
     }
 
-    private fun setSwitchesChecked(isChecked: Boolean) {
+    private fun setIsCheckedToFalse() {
         with(binding) {
-            switchHappiness.isChecked = isChecked
-            switchOptimism.isChecked = isChecked
-            switchKindness.isChecked = isChecked
-            switchGiving.isChecked = isChecked
-            switchRespect.isChecked = isChecked
-            Log.e("EGO","HomeFragment-setSwitchesChecked isChecked: $isChecked")
+            switchGiving.isChecked = false
+            switchRespect.isChecked = false
+            switchKindness.isChecked = false
+            switchOptimism.isChecked = false
+            switchHappiness.isChecked = false
         }
     }
-    private fun updateBottomNavigationView(items: List<Int> = emptyList()) {
-        val mainActivity = activity as? MainActivity
-        mainActivity?.toggleBottomNavigationView(items)
-    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         Log.e("EGO","HomeFragment-onDestroyView")

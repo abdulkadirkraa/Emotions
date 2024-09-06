@@ -1,92 +1,71 @@
 package com.abdulkadirkara.emotions.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.abdulkadirkara.emotions.R
 
 class HomeFragmentViewModel: ViewModel() {
-    // Ego switch'in durumu
-    private val _isEgoChecked = MutableLiveData<Boolean>()
-    val isEgoChecked: LiveData<Boolean> get() = _isEgoChecked
+    private val _isEgoState = MutableLiveData<Boolean>()
+    val isEgoState: LiveData<Boolean> get() = _isEgoState
 
-    // Diğer switchlerin tıklanabilirlik ve durum bilgisi
-    private val _areSwitchesClickable = MutableLiveData<Boolean>()
-    val areSwitchesClickable: LiveData<Boolean> get() = _areSwitchesClickable
+    private val _isHappinessState = MutableLiveData<Boolean>()
+    val isHappinessState: LiveData<Boolean> get() = _isHappinessState
 
-    private val _areSwitchesChecked = MutableLiveData<Boolean>()
-    val areSwitchesChecked: LiveData<Boolean> get() = _areSwitchesChecked
+    private val _isOptimismState = MutableLiveData<Boolean>()
+    val isOptimismState: LiveData<Boolean> get() = _isOptimismState
 
-    private val _navigationItems = MutableLiveData<MutableList<Int>>(mutableListOf())
-    val navigationItems: LiveData<MutableList<Int>> get() = _navigationItems
+    private val _isKindnessState = MutableLiveData<Boolean>()
+    val isKindnessState: LiveData<Boolean> get() = _isKindnessState
 
-    // Mesaj için LiveData
-    private val _maxItemsReachedMessage = MutableLiveData<Boolean>()
-    val maxItemsReachedMessage: LiveData<Boolean> get() = _maxItemsReachedMessage
+    private val _isGivingState = MutableLiveData<Boolean>()
+    val isGivingState: LiveData<Boolean> get() = _isGivingState
+
+    private val _isRespectState = MutableLiveData<Boolean>()
+    val isRespectState: LiveData<Boolean> get() = _isRespectState
 
     init {
-        _isEgoChecked.value = true
-        _areSwitchesClickable.value = false
-        _areSwitchesChecked.value = false
-        _maxItemsReachedMessage.value = false
-        Log.e("EGO", "HomeFragmentViewModel-init")
+        _isEgoState.value = true
+        _isHappinessState.value = false
+        _isOptimismState.value = false
+        _isKindnessState.value = false
+        _isGivingState.value = false
+        _isRespectState.value = false
     }
 
-    fun onEgoSwitchChanged(isChecked: Boolean) {
-        _isEgoChecked.value = isChecked
-        Log.e("EGO", "HomeFragmentViewModel-onEgoSwitchChanged isChecked: $isChecked")
-        if (isChecked) {
-            handleEgoSwitchChecked()
-        } else {
-            handleEgoSwitchUnchecked()
+    fun setSwitchEgoState(state: Boolean) {
+        _isEgoState.value = state
+        if (state) {
+            // Ego açıkken diğer anahtarları kapatıyoruz
+            setAllSwitchesState(false)
         }
     }
 
-    fun onOtherSwitchChanged(switchId: Int, isChecked: Boolean) {
-        val items = _navigationItems.value ?: mutableListOf()
-        Log.e("EGO", "HomeFragmentViewModel-onOtherSwitchChanged switchId: $switchId isChecked: $isChecked")
-        if (isChecked) {
-            handleSwitchChecked(switchId, items)
-        } else {
-            handleSwitchUnchecked(switchId, items)
-        }
-        _navigationItems.value = items
+    private fun setAllSwitchesState(state: Boolean) {
+        _isHappinessState.value = state
+        _isOptimismState.value = state
+        _isKindnessState.value = state
+        _isGivingState.value = state
+        _isRespectState.value = state
     }
 
-    fun resetMaxItemsReachedMessage() {
-        _maxItemsReachedMessage.value = false
-    }
-    private fun handleEgoSwitchChecked() {
-        Log.e("EGO", "HomeFragmentViewModel-handleEgoSwitchChecked")
-        _areSwitchesClickable.value = false
-        _areSwitchesChecked.value = false
-        clearNavigationItems()
+
+    fun setSwitchHappinessState(state: Boolean) {
+        _isHappinessState.value = state
     }
 
-    private fun handleEgoSwitchUnchecked() {
-        Log.e("EGO", "HomeFragmentViewModel-handleEgoSwitchUnchecked")
-        _areSwitchesClickable.value = true
-        setHomeFragmentAsDefaultNavigationItem()
+    fun setSwitchKindnessState(state: Boolean) {
+        _isKindnessState.value = state
     }
 
-    private fun clearNavigationItems() {
-        _navigationItems.value?.clear()
+    fun setSwitchOptimismState(state: Boolean) {
+        _isOptimismState.value = state
     }
 
-    private fun setHomeFragmentAsDefaultNavigationItem() {
-        _navigationItems.value = mutableListOf(R.id.homeFragment)
+    fun setSwitchRespectState(state: Boolean) {
+        _isRespectState.value = state
     }
-    private fun handleSwitchChecked(switchId: Int, items: MutableList<Int>) {
-        Log.e("EGO", "HomeFragmentViewModel-handleSwitchChecked switchId: $switchId , items.size: ${items.size}")
-        if (!items.contains(switchId) && items.size < 5) {
-            items.add(switchId)
-        } else if (items.size >= 5) {
-            _maxItemsReachedMessage.value = true
-        }
-    }
-    private fun handleSwitchUnchecked(switchId: Int, items: MutableList<Int>) {
-        Log.e("EGO", "HomeFragmentViewModel-handleSwitchUnchecked switchId: $switchId , items.size: ${items.size}")
-        items.remove(switchId)
+
+    fun setSwitchGivingState(state: Boolean) {
+        _isGivingState.value = state
     }
 }

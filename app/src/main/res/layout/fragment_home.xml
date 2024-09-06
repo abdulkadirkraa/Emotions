@@ -21,7 +21,7 @@
             android:thumb="@drawable/switch_thumb"
             android:layout_margin="8dp"
             android:checked="false"
-            android:clickable="false"
+            android:enabled="false"
             android:layout_gravity="center"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -51,7 +51,7 @@
             android:thumb="@drawable/switch_thumb"
             android:layout_margin="8dp"
             android:checked="false"
-            android:clickable="false"
+            android:enabled="false"
             android:layout_gravity="center"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -81,7 +81,7 @@
             android:thumb="@drawable/switch_thumb"
             android:layout_margin="8dp"
             android:checked="false"
-            android:clickable="false"
+            android:enabled="false"
             android:layout_gravity="center"
             tools:ignore="UseSwitchCompatOrMaterialXml"/>
 
@@ -113,7 +113,7 @@
             android:thumb="@drawable/switch_thumb"
             android:layout_margin="8dp"
             android:checked="false"
-            android:clickable="false"
+            android:enabled="false"
             android:layout_gravity="center"
             tools:ignore="UseSwitchCompatOrMaterialXml"/>
 
@@ -144,7 +144,7 @@
             android:thumb="@drawable/switch_thumb"
             android:layout_margin="8dp"
             android:checked="false"
-            android:clickable="false"
+            android:enabled="false"
             android:layout_gravity="center"
             tools:ignore="UseSwitchCompatOrMaterialXml"/>
 
@@ -175,6 +175,7 @@
             android:thumb="@drawable/switch_thumb"
             android:layout_margin="8dp"
             android:checked="true"
+            android:enabled="true"
             android:layout_gravity="center"
             tools:ignore="UseSwitchCompatOrMaterialXml"/>
 

@@ -7,72 +7,92 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.abdulkadirkara.emotions.R
 import com.abdulkadirkara.emotions.databinding.ActivityMainBinding
+import com.abdulkadirkara.emotions.viewmodel.HomeFragmentViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: HomeFragmentViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        getNavControllerViaFragment()
-    }
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.navHostFragment) as NavHostFragment
 
-    private fun getNavControllerViaFragment() {
-        val navHostFragmentView =
-            supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
-        val navController = navHostFragmentView.navController
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navHostFragment.navController)
 
-        binding.bottomNavigationView.setupWithNavController(navController)
-    }
+        viewModel = ViewModelProvider(this)[HomeFragmentViewModel::class.java]
 
-    fun toggleBottomNavigationView(items: List<Int>) {
-        if (items.isEmpty()) {
-            hideBottomNavigationView()
-        } else {
-            clearAndInflateMenu()
-            items.forEach { item ->
-                when (item) {
-                    R.id.happinessFragment -> addMenuItem(R.id.happinessFragment,"Happiness",R.drawable.ic_happiness)
-                    R.id.optimismFragment -> addMenuItem(R.id.optimismFragment,"Optimism",R.drawable.ic_optimism)
-                    R.id.kindnessFragment -> addMenuItem(R.id.kindnessFragment,"Kindness",R.drawable.ic_kindness)
-                    R.id.givingFragment -> addMenuItem(R.id.givingFragment,"Giving",R.drawable.ic_giving)
-                    R.id.respectFragment -> addMenuItem(
-                        R.id.respectFragment,
-                        "Respect",
-                        R.drawable.ic_respect
-                    )
+        with(viewModel) {
+            isHappinessState.observe(this@MainActivity) { isChecked ->
+                updateBottomNavMenu(isChecked, R.id.happinessFragment)
+            }
+
+            isKindnessState.observe(this@MainActivity) { isChecked ->
+                updateBottomNavMenu(isChecked, R.id.kindnessFragment)
+            }
+
+            isOptimismState.observe(this@MainActivity) { isChecked ->
+                updateBottomNavMenu(isChecked, R.id.optimismFragment)
+            }
+
+            isGivingState.observe(this@MainActivity) { isChecked ->
+                updateBottomNavMenu(isChecked, R.id.givingFragment)
+            }
+
+            isRespectState.observe(this@MainActivity) { isChecked ->
+                updateBottomNavMenu(isChecked, R.id.respectFragment)
+            }
+
+            isEgoState.observe(this@MainActivity) { isChecked ->
+                if (!isChecked) {
+                    binding.bottomNavigationView.visibility = View.VISIBLE
+                } else {
+                    binding.bottomNavigationView.visibility = View.GONE
                 }
             }
-            showBottomNavigationView()
         }
     }
-    private fun hideBottomNavigationView() {
-        binding.bottomNavigationView.visibility = View.GONE
+    fun updateBottomNavMenu(isChecked: Boolean, itemId: Int) {
+        val menu = binding.bottomNavigationView.menu
+
+        if (isChecked) {
+            if (menu.findItem(itemId) == null && menu.size() <= 4) {
+                menu.add(Menu.NONE, itemId, Menu.NONE, getMenuTitle(itemId)).setIcon(getMenuIcon(itemId))
+            }
+        } else {
+            menu.removeItem(itemId)
+        }
     }
-    private fun showBottomNavigationView() {
-        binding.bottomNavigationView.visibility = View.VISIBLE
+
+    private fun getMenuTitle(itemId: Int): String {
+        return when (itemId) {
+            R.id.happinessFragment -> "Happiness"
+            R.id.kindnessFragment -> "Kindess"
+            R.id.optimismFragment -> "Optimism"
+            R.id.givingFragment -> "Giving"
+            R.id.respectFragment -> "Respect"
+            else -> ""
+        }
     }
-    private fun clearAndInflateMenu() {
-        binding.bottomNavigationView.menu.clear()
-        binding.bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu)
-    }
-    private fun addMenuItem(itemId: Int, title: String, iconResId: Int) {
-        binding.bottomNavigationView.menu.add(
-            Menu.NONE,
-            itemId,
-            Menu.NONE,
-            title
-        ).setIcon(iconResId)
+
+    private fun getMenuIcon(itemId: Int): Int {
+        return when (itemId) {
+            R.id.happinessFragment -> R.drawable.ic_happiness
+            R.id.kindnessFragment -> R.drawable.ic_kindness
+            R.id.optimismFragment -> R.drawable.ic_optimism
+            R.id.givingFragment -> R.drawable.ic_giving
+            R.id.respectFragment -> R.drawable.ic_respect
+            else -> 0
+        }
     }
 }
