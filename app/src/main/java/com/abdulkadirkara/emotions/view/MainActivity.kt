@@ -1,11 +1,14 @@
 package com.abdulkadirkara.emotions.view
 
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -35,6 +38,11 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(navController)
 
         binding.bottomNavigationView.visibility = View.GONE
+
+        val aniationDrawable: AnimationDrawable = binding.navHostFragment.background as AnimationDrawable
+        aniationDrawable.setEnterFadeDuration(1000)
+        aniationDrawable.setExitFadeDuration(3000)
+        aniationDrawable.start()
 
         observeViewModel()
 

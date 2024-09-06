@@ -16,7 +16,7 @@
         android:layout_weight="1"
         app:navGraph="@navigation/nav_graph"
         app:defaultNavHost="true"
-        android:layout_marginTop="20dp"/>
+        android:background="@drawable/gradient_list"/>
     
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

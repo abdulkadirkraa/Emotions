@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.KindnessFragment"
-    android:background="@color/kindess">
+    tools:context=".view.KindnessFragment">
 
     <ScrollView
         android:layout_margin="8dp"
