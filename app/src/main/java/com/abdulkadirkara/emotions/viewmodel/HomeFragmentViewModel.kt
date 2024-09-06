@@ -1,5 +1,6 @@
 package com.abdulkadirkara.emotions.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,17 +24,9 @@ class HomeFragmentViewModel: ViewModel() {
     private val _isRespectState = MutableLiveData<Boolean>()
     val isRespectState: LiveData<Boolean> get() = _isRespectState
 
-    init {
-        _isEgoState.value = true
-        _isHappinessState.value = false
-        _isOptimismState.value = false
-        _isKindnessState.value = false
-        _isGivingState.value = false
-        _isRespectState.value = false
-    }
-
     fun setSwitchEgoState(state: Boolean) {
         _isEgoState.value = state
+        Log.e("EGO","HomeFragmentViewModel-setSwitchEgoState $state")
         if (state) {
             // Ego açıkken diğer anahtarları kapatıyoruz
             setAllSwitchesState(false)
@@ -41,6 +34,7 @@ class HomeFragmentViewModel: ViewModel() {
     }
 
     private fun setAllSwitchesState(state: Boolean) {
+        Log.e("EGO","HomeFragmentViewModel-setAllSwitchesState $state")
         _isHappinessState.value = state
         _isOptimismState.value = state
         _isKindnessState.value = state
@@ -50,22 +44,27 @@ class HomeFragmentViewModel: ViewModel() {
 
 
     fun setSwitchHappinessState(state: Boolean) {
+        Log.e("EGO","HomeFragmentViewModel-setSwitchHappinessState $state")
         _isHappinessState.value = state
     }
 
     fun setSwitchKindnessState(state: Boolean) {
+        Log.e("EGO","HomeFragmentViewModel-setSwitchKindnessState $state")
         _isKindnessState.value = state
     }
 
     fun setSwitchOptimismState(state: Boolean) {
+        Log.e("EGO","HomeFragmentViewModel-setSwitchOptimismState $state")
         _isOptimismState.value = state
     }
 
     fun setSwitchRespectState(state: Boolean) {
+        Log.e("EGO","HomeFragmentViewModel-setSwitchRespectState $state")
         _isRespectState.value = state
     }
 
     fun setSwitchGivingState(state: Boolean) {
+        Log.e("EGO","HomeFragmentViewModel-setSwitchGivingState $state")
         _isGivingState.value = state
     }
 }

@@ -7,20 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.abdulkadirkara.emotions.R
 import com.abdulkadirkara.emotions.databinding.FragmentHomeBinding
 import com.abdulkadirkara.emotions.viewmodel.HomeFragmentViewModel
 
 class HomeFragment : Fragment() {
 
-    private val viewModel = HomeFragmentViewModel()
+    private lateinit var viewModel: HomeFragmentViewModel
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         Log.e("EGO","HomeFragment-onCreateView")
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -29,30 +30,36 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeViewModel()
+        viewModel = ViewModelProvider(requireActivity())[HomeFragmentViewModel::class.java]
 
         with(binding) {
             switchHappiness.setOnCheckedChangeListener { _, isChecked ->
+                Log.e("EGO","HomeFragment-onViewCreated-switchHappiness $isChecked")
                 viewModel.setSwitchHappinessState(isChecked)
             }
 
             switchKindness.setOnCheckedChangeListener { _, isChecked ->
+                Log.e("EGO","HomeFragment-onViewCreated-switchKindness $isChecked")
                 viewModel.setSwitchKindnessState(isChecked)
             }
 
             switchOptimism.setOnCheckedChangeListener { _, isChecked ->
+                Log.e("EGO","HomeFragment-onViewCreated-switchOptimism $isChecked")
                 viewModel.setSwitchOptimismState(isChecked)
             }
 
             switchGiving.setOnCheckedChangeListener { _, isChecked ->
+                Log.e("EGO","HomeFragment-onViewCreated-switchGiving $isChecked")
                 viewModel.setSwitchGivingState(isChecked)
             }
 
             switchRespect.setOnCheckedChangeListener { _, isChecked ->
+                Log.e("EGO","HomeFragment-onViewCreated-switchRespect $isChecked")
                 viewModel.setSwitchRespectState(isChecked)
             }
 
             switchEgo.setOnCheckedChangeListener { _, isChecked ->
+                Log.e("EGO","HomeFragment-onViewCreated-switchEgo $isChecked")
                 viewModel.setSwitchEgoState(isChecked)
 
                 if (isChecked) {
@@ -66,36 +73,8 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun observeViewModel() {
-        viewModel.isEgoState.observe(viewLifecycleOwner) { isEgoChecked ->
-            setSwitchStatus(!isEgoChecked)
-            if (isEgoChecked) {
-                setIsCheckedToFalse()
-            }
-        }
-
-        viewModel.isHappinessState.observe(viewLifecycleOwner) { isChecked ->
-            binding.switchHappiness.isChecked = isChecked
-        }
-
-        viewModel.isOptimismState.observe(viewLifecycleOwner) { isChecked ->
-            binding.switchOptimism.isChecked = isChecked
-        }
-
-        viewModel.isKindnessState.observe(viewLifecycleOwner) { isChecked ->
-            binding.switchKindness.isChecked = isChecked
-        }
-
-        viewModel.isGivingState.observe(viewLifecycleOwner) { isChecked ->
-            binding.switchGiving.isChecked = isChecked
-        }
-
-        viewModel.isRespectState.observe(viewLifecycleOwner) { isChecked ->
-            binding.switchRespect.isChecked = isChecked
-        }
-    }
-
     private fun setSwitchStatus(status: Boolean) {
+        Log.e("EGO","HomeFragment-setSwitchStatus $status")
         with(binding) {
             switchRespect.isEnabled = status
             switchGiving.isEnabled = status
@@ -106,6 +85,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setIsCheckedToFalse() {
+        Log.e("EGO","HomeFragment-setIsCheckedToFalse")
         with(binding) {
             switchGiving.isChecked = false
             switchRespect.isChecked = false

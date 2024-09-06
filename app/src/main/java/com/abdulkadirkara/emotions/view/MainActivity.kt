@@ -1,12 +1,11 @@
 package com.abdulkadirkara.emotions.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -19,59 +18,90 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: HomeFragmentViewModel
+    private lateinit var navHostFragment: NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.navHostFragment) as NavHostFragment
-
-        NavigationUI.setupWithNavController(binding.bottomNavigationView, navHostFragment.navController)
 
         viewModel = ViewModelProvider(this)[HomeFragmentViewModel::class.java]
 
+        navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.navHostFragment) as NavHostFragment
+
+        val navController = navHostFragment.navController
+        binding.bottomNavigationView.setupWithNavController(navController)
+
+        binding.bottomNavigationView.visibility = View.GONE
+
+        observeViewModel()
+
+    }
+
+    private fun observeViewModel() {
         with(viewModel) {
             isHappinessState.observe(this@MainActivity) { isChecked ->
+                Log.e("EGO","MainActivity-observeViewModel-isHappinessState $isChecked")
                 updateBottomNavMenu(isChecked, R.id.happinessFragment)
             }
 
             isKindnessState.observe(this@MainActivity) { isChecked ->
+                Log.e("EGO","MainActivity-observeViewModel-isKindnessState $isChecked")
                 updateBottomNavMenu(isChecked, R.id.kindnessFragment)
             }
 
             isOptimismState.observe(this@MainActivity) { isChecked ->
+                Log.e("EGO","MainActivity-observeViewModel-isOptimismState $isChecked")
                 updateBottomNavMenu(isChecked, R.id.optimismFragment)
             }
 
             isGivingState.observe(this@MainActivity) { isChecked ->
+                Log.e("EGO","MainActivity-observeViewModel-isGivingState $isChecked")
                 updateBottomNavMenu(isChecked, R.id.givingFragment)
             }
 
             isRespectState.observe(this@MainActivity) { isChecked ->
+                Log.e("EGO","MainActivity-observeViewModel-isRespectState $isChecked")
                 updateBottomNavMenu(isChecked, R.id.respectFragment)
             }
 
             isEgoState.observe(this@MainActivity) { isChecked ->
+                Log.e("EGO","MainActivity-observeViewModel-isEgoState $isChecked")
                 if (!isChecked) {
                     binding.bottomNavigationView.visibility = View.VISIBLE
+                    Log.e("EGO","MainActivity-observeViewModel-bottomnav-VISIBLE")
+                    updateBottomNavMenu(true, R.id.homeFragment)
                 } else {
                     binding.bottomNavigationView.visibility = View.GONE
+                    Log.e("EGO","MainActivity-observeViewModel-bottomnav-GONE")
+                    resetBottomNavMenu()
                 }
             }
         }
     }
-    fun updateBottomNavMenu(isChecked: Boolean, itemId: Int) {
-        val menu = binding.bottomNavigationView.menu
 
-        if (isChecked) {
-            if (menu.findItem(itemId) == null && menu.size() <= 4) {
-                menu.add(Menu.NONE, itemId, Menu.NONE, getMenuTitle(itemId)).setIcon(getMenuIcon(itemId))
-            }
-        } else {
+    private fun updateBottomNavMenu(isChecked: Boolean, itemId: Int) {
+        val menu = binding.bottomNavigationView.menu
+        if (isChecked && menu.findItem(itemId) == null && menu.size() < 5) {
+            menu.add(Menu.NONE, itemId, Menu.NONE, getMenuTitle(itemId))
+                .setIcon(getMenuIcon(itemId))
+
+            Log.e("EGO","MainActivity-updateBottomNavMenu-add ${getMenuTitle(itemId)}")
+            // Sync with NavController when new item is added
+            NavigationUI.setupWithNavController(binding.bottomNavigationView, navHostFragment.navController)
+        } else if (!isChecked) {
             menu.removeItem(itemId)
         }
+    }
+
+    private fun resetBottomNavMenu() {
+        Log.e("EGO","MainActivity-resetBottomNavMenu")
+        val menu = binding.bottomNavigationView.menu
+        menu.clear()
+        menu.add(Menu.NONE, R.id.homeFragment, Menu.NONE, "Home")
+            .setIcon(R.drawable.ic_home)
     }
 
     private fun getMenuTitle(itemId: Int): String {
