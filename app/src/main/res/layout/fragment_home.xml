@@ -33,6 +33,7 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_gravity="center"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -93,6 +94,7 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_gravity="center"/>
+
     </LinearLayout>
 
     <LinearLayout

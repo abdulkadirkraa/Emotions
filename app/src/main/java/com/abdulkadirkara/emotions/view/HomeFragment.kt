@@ -1,11 +1,14 @@
 package com.abdulkadirkara.emotions.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.Switch
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.abdulkadirkara.emotions.R
@@ -17,6 +20,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeFragmentViewModel
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    var activeSwitches = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,34 +36,33 @@ class HomeFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity())[HomeFragmentViewModel::class.java]
 
+        checkedChangeListener()
+
+    }
+
+    private fun checkedChangeListener(){
         with(binding) {
             switchHappiness.setOnCheckedChangeListener { _, isChecked ->
-                Log.e("EGO","HomeFragment-onViewCreated-switchHappiness $isChecked")
-                viewModel.setSwitchHappinessState(isChecked)
+                handleSwitchChange(isChecked, "Happiness", switchHappiness)
             }
 
             switchKindness.setOnCheckedChangeListener { _, isChecked ->
-                Log.e("EGO","HomeFragment-onViewCreated-switchKindness $isChecked")
-                viewModel.setSwitchKindnessState(isChecked)
+                handleSwitchChange(isChecked, "Kindness", switchKindness)
             }
 
             switchOptimism.setOnCheckedChangeListener { _, isChecked ->
-                Log.e("EGO","HomeFragment-onViewCreated-switchOptimism $isChecked")
-                viewModel.setSwitchOptimismState(isChecked)
+                handleSwitchChange(isChecked, "Optimism", switchOptimism)
             }
 
             switchGiving.setOnCheckedChangeListener { _, isChecked ->
-                Log.e("EGO","HomeFragment-onViewCreated-switchGiving $isChecked")
-                viewModel.setSwitchGivingState(isChecked)
+                handleSwitchChange(isChecked, "Giving", switchGiving)
             }
 
             switchRespect.setOnCheckedChangeListener { _, isChecked ->
-                Log.e("EGO","HomeFragment-onViewCreated-switchRespect $isChecked")
-                viewModel.setSwitchRespectState(isChecked)
+                handleSwitchChange(isChecked, "Respect", switchRespect)
             }
 
             switchEgo.setOnCheckedChangeListener { _, isChecked ->
-                Log.e("EGO","HomeFragment-onViewCreated-switchEgo $isChecked")
                 viewModel.setSwitchEgoState(isChecked)
 
                 if (isChecked) {
@@ -70,7 +73,37 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
 
+    // Her switch için kontrol: Eğer 4 switch açıksa, Toast göster ve durumu açtırma
+    private fun handleSwitchChange(isChecked: Boolean, switchName: String, switchView: Switch) {
+        if (isChecked && getActiveSwitchCount() >= 5) {
+            // Maksimum limit mesajı göster ve switch'i tekrar kapalı yap
+            Toast.makeText(requireContext(), "Maksimum 4 switch açılabilir", Toast.LENGTH_SHORT).show()
+            switchView.isChecked = false
+        } else {
+            // Switch durumu ViewModel'e kaydet (opsiyonel)
+            when (switchName) {
+                "Happiness" -> viewModel.setSwitchHappinessState(isChecked)
+                "Kindness" -> viewModel.setSwitchKindnessState(isChecked)
+                "Optimism" -> viewModel.setSwitchOptimismState(isChecked)
+                "Giving" -> viewModel.setSwitchGivingState(isChecked)
+                "Respect" -> viewModel.setSwitchRespectState(isChecked)
+            }
+        }
+    }
+
+    // Aktif olan (checked=true) switch'leri say
+    private fun getActiveSwitchCount(): Int {
+        return with(binding) {
+            var count = 0
+            if (switchHappiness.isChecked) count++
+            if (switchKindness.isChecked) count++
+            if (switchOptimism.isChecked) count++
+            if (switchGiving.isChecked) count++
+            if (switchRespect.isChecked) count++
+            count
+        }
     }
 
     private fun setSwitchStatus(status: Boolean) {
