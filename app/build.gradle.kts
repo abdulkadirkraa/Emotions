@@ -53,4 +53,8 @@ dependencies {
     // Views/Fragments integration Navigation
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+
+    //Lottie Animations
+    implementation(libs.lottie)
+
 }
