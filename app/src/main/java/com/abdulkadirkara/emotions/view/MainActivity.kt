@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -41,6 +42,14 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(navController)
 
         binding.bottomNavigationView.visibility = View.GONE
+
+        // Arka plan rengini ayarla
+        val window = window
+        val navBarColor = ContextCompat.getColor(this, R.color.nav_bar_color)
+        window.navigationBarColor = navBarColor
+
+        // BottomNavigationView ayarları
+        binding.bottomNavigationView.background = ContextCompat.getDrawable(this, R.drawable.bottom_nav_background)
 
         val aniationDrawable: AnimationDrawable = binding.navHostFragment.background as AnimationDrawable
         aniationDrawable.setEnterFadeDuration(1000)
