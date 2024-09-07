@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Küçük ekranlar için margin değerleri -->
+    <dimen name="viewPager_margin" tools:ignore="MissingDefaultResource">28dp</dimen>
+</resources>
