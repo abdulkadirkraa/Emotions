@@ -57,4 +57,7 @@ dependencies {
     //Lottie Animations
     implementation(libs.lottie)
 
+    //viewpager2
+    implementation(libs.androidx.viewpager2)
+
 }

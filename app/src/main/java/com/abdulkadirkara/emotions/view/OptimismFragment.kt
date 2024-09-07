@@ -6,15 +6,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.abdulkadirkara.emotions.R
+import com.abdulkadirkara.emotions.adapter.ViewPagerAdapter
+import com.abdulkadirkara.emotions.databinding.FragmentOptimismBinding
 
 
 class OptimismFragment : Fragment() {
 
+    private var _binding: FragmentOptimismBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_optimism, container, false)
+        _binding = FragmentOptimismBinding.inflate(inflater, container, false)
+        // Veriler
+        val titles = listOf(
+            "Her şeyin iyi olacağına inanmayan, hiçbir şey başaramaz.",
+            "İyimserlik, sadece başarının habercisi değil, aynı zamanda başarının kendisidir.",
+            "İyimserler her fırtınada güneşi görür, kötümserler her güneşte bir fırtına bekler.")
+
+        val texts = listOf(
+            "—Helen Keller",
+            "—Anonymous",
+            "—William Arthur Ward"
+        )
+        val animations = listOf(
+            R.raw.animtwelve,
+            R.raw.animthirteen,
+            R.raw.animfourteen
+        )
+
+        // ViewPager ve Adapter bağlama
+        val viewPager = binding.viewPager
+        val adapter = ViewPagerAdapter(titles, texts, animations)
+        viewPager.adapter = adapter
+
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

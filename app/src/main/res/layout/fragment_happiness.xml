@@ -1,107 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.HappinessFragment">
 
-
-    <ScrollView
-        android:layout_margin="8dp"
+    <!-- ViewPager2 ile kaydırılabilir içerik oluşturulacak -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/happiness_title"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textColor="@color/red"/>
-
-            <TextView
-                android:layout_margin="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/happiness_text"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/happines_mini_title1"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/red"
-                android:layout_margin="8dp"
-                android:paddingStart="16dp"/>
-
-            <TextView
-                android:layout_margin="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/happiness_text1"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/happiness_mini_title2"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/red"
-                android:layout_margin="8dp"
-                android:paddingStart="16dp"/>
-
-            <TextView
-                android:layout_margin="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/happiness_text2"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/happiness_mini_title3"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/red"
-                android:layout_margin="8dp"
-                android:paddingStart="16dp"/>
-
-            <TextView
-                android:layout_margin="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/happiness_text3"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
-
-        </LinearLayout>
-    </ScrollView>
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

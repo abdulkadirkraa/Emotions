@@ -6,14 +6,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.abdulkadirkara.emotions.R
+import com.abdulkadirkara.emotions.adapter.ViewPagerAdapter
+import com.abdulkadirkara.emotions.databinding.FragmentGivingBinding
 
 class GivingFragment : Fragment() {
+
+    private var _binding: FragmentGivingBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_giving, container, false)
+        _binding = FragmentGivingBinding.inflate(inflater, container, false)
+
+        // Veriler
+        val titles = listOf(
+            "Vermek, alanın ruhunu beslediği kadar verenin ruhunu da büyütür.",
+            "Sevgi vermektir, almak değil.",
+            "Başkalarına verebileceğimiz en büyük hediye zamanımızdır.")
+
+        val texts = listOf(
+            "—Maya Angelou",
+            "—Victor Hugo",
+            "—Rick Warren"
+        )
+        val animations = listOf(
+            R.raw.animtwo,
+            R.raw.animseven,
+            R.raw.animeight
+        )
+
+        // ViewPager ve Adapter bağlama
+        val viewPager = binding.viewPager
+        val adapter = ViewPagerAdapter(titles, texts, animations)
+        viewPager.adapter = adapter
+
+        return binding.root
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }
