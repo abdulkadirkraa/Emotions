@@ -50,6 +50,13 @@ class OptimismFragment : Fragment() {
         val adapter = ViewPagerAdapter(titles, texts, animations)
         viewPager.adapter = adapter
 
+        // Page margin ve adjacent page'in görünmesini sağlamak için ayarlar
+        viewPager.offscreenPageLimit = 3
+        viewPager.setPageTransformer { page, position ->
+            val scaleFactor = 0.85f.coerceAtLeast(1 - kotlin.math.abs(position))
+            page.scaleY = scaleFactor
+        }
+
         return binding.root
     }
 
