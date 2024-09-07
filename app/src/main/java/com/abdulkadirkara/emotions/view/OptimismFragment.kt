@@ -24,18 +24,25 @@ class OptimismFragment : Fragment() {
         // Veriler
         val titles = listOf(
             "Her şeyin iyi olacağına inanmayan, hiçbir şey başaramaz.",
-            "İyimserlik, sadece başarının habercisi değil, aynı zamanda başarının kendisidir.",
-            "İyimserler her fırtınada güneşi görür, kötümserler her güneşte bir fırtına bekler.")
+            "İyimserler her fırtınada güneşi görür, kötümserler her güneşte bir fırtına bekler.",
+            "İyimser insan, her krizde bir fırsat; kötümser insan ise her fırsatta bir kriz görür.",
+            "İyimserlik, insan ruhunun bir zaferidir.",
+            "Güneşin batışına bakın, çünkü ertesi sabah yeniden doğar."
+        )
 
         val texts = listOf(
             "—Helen Keller",
-            "—Anonymous",
-            "—William Arthur Ward"
+            "—William Arthur Ward",
+            "—Winston Churchill",
+            "—Helen Keller",
+            "—Hafez"
         )
         val animations = listOf(
+            R.raw.animeleven,
             R.raw.animtwelve,
             R.raw.animthirteen,
-            R.raw.animfourteen
+            R.raw.animfourteen,
+            R.raw.animfiveteen
         )
 
         // ViewPager ve Adapter bağlama

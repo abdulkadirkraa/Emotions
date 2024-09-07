@@ -24,17 +24,24 @@ class RespectFragment : Fragment() {
         val titles = listOf(
             "Başkalarına gösterdiğiniz saygı, size gösterilecek saygının aynasıdır.",
             "Saygı görmek istiyorsan, herkese olduğu gibi davran; ne fazla ne eksik.",
-            "Kendine saygı duymayan bir insan başkalarına asla saygı gösteremez.")
+            "Kendine saygı duymayan bir insan başkalarına asla saygı gösteremez.",
+            "Saygı, iki insan arasındaki mesafeyi azaltan görünmez bir köprüdür.",
+            "Saygı duyulmak için önce saygı göstermeliyiz."
+        )
 
         val texts = listOf(
             "—Anonymous",
             "—Johann Wolfgang von Goethe",
-            "—Albert Camus"
+            "—Albert Camus",
+            "—Leo Tolstoy",
+            "—Albert Einstein"
         )
         val animations = listOf(
+            R.raw.animsixteen,
             R.raw.animfiveteen,
-            R.raw.animtwo,
-            R.raw.animeight
+            R.raw.animfourteen,
+            R.raw.animthirteen,
+            R.raw.animtwelve
         )
 
         // ViewPager ve Adapter bağlama

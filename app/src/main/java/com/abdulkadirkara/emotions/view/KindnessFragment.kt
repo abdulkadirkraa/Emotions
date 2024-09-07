@@ -23,18 +23,25 @@ class KindnessFragment : Fragment() {
         // Veriler
         val titles = listOf(
             "Nezaket, başkalarının sırtındaki ağırlığı hafifletmek için elini uzatmaktır",
-            "Küçük nezaketler büyük dostluklar yaratır.",
-            "Nezaket, geri dönüşü olmayan bir yoldur; verdiğinde sana bir şekilde geri döner.")
+            "Nezaket, geri dönüşü olmayan bir yoldur; verdiğinde sana bir şekilde geri döner.",
+            "Nezaket; duymadıklarımızı duymak, yapmadıklarımızı yapmak, görmediklerimizi görmek demektir.",
+            "Nezaket, sevgiyi görünür kılar.",
+            "Bir insanın değeri, başkalarına gösterdiği nezaketle ölçülür."
+        )
 
         val texts = listOf(
             "—Joseph Joubert",
-            "—Anonymous",
-            "—Seneca"
+            "—Seneca",
+            "—Mark Twain",
+            "—Ralph Waldo Emerson",
+            "—Albert Schweitzer"
         )
         val animations = listOf(
-            R.raw.animnine,
-            R.raw.animten,
-            R.raw.animeleven
+            R.raw.animsixteen,
+            R.raw.animfive,
+            R.raw.animfour,
+            R.raw.animthree,
+            R.raw.animtwo
         )
 
         // ViewPager ve Adapter bağlama

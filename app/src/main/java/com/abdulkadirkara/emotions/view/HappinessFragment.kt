@@ -26,17 +26,27 @@ class HappinessFragment : Fragment() {
         val titles = listOf(
             "Mutluluğu tatmanın tek bir yolu vardır: Başkalarına da mutluluk vermek.",
             "Mutlu bir yaşam, dingin bir aklın sonucudur.",
-            "Mutluluk, insanın düşündüğü, söylediği ve yaptığı şeylerin uyum içinde olmasıdır.")
+            "Mutluluk, insanın düşündüğü, söylediği ve yaptığı şeylerin uyum içinde olmasıdır.",
+            "Mutlu olmak istiyorsan, kendini başkalarıyla karşılaştırmayı bırak.",
+            "Mutluluk, sahip olduklarını sevmekle olur, istediğin her şeye sahip olmakla değil.",
+            "Mutluluğun sırrı, yapılacak doğru şeyi bulmaktan çok, yapılan her şeyde mutluluğu bulmaktır."
+        )
 
         val texts = listOf(
             "—John Stuart Mill",
             "—Marcus Aurelius",
-            "—Mahatma Gandhi"
+            "—Mahatma Gandhi",
+            "—Albert Einstein",
+            "—Leo Tolstoy",
+            "—Thomas Carlyle"
         )
         val animations = listOf(
             R.raw.animthree,
             R.raw.animfour,
-            R.raw.animfive
+            R.raw.animfive,
+            R.raw.animseven,
+            R.raw.animnine,
+            R.raw.animten
         )
 
         // ViewPager ve Adapter bağlama

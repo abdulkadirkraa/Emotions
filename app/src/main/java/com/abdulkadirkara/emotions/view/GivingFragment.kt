@@ -25,17 +25,21 @@ class GivingFragment : Fragment() {
         val titles = listOf(
             "Vermek, alanın ruhunu beslediği kadar verenin ruhunu da büyütür.",
             "Sevgi vermektir, almak değil.",
-            "Başkalarına verebileceğimiz en büyük hediye zamanımızdır.")
+            "Başkalarına verebileceğimiz en büyük hediye zamanımızdır.",
+            "Gerçek zenginlik, verdiklerinle ölçülür."
+        )
 
         val texts = listOf(
             "—Maya Angelou",
             "—Victor Hugo",
-            "—Rick Warren"
+            "—Rick Warren",
+            "—Walt Whitman"
         )
         val animations = listOf(
-            R.raw.animtwo,
-            R.raw.animseven,
-            R.raw.animeight
+            R.raw.animeleven,
+            R.raw.animten,
+            R.raw.animnine,
+            R.raw.animseven
         )
 
         // ViewPager ve Adapter bağlama
