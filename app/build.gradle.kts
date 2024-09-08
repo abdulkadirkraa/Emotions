@@ -60,4 +60,7 @@ dependencies {
     //viewpager2
     implementation(libs.androidx.viewpager2)
 
+    //CircleIndicator
+    implementation(libs.dotsindicator)
+
 }

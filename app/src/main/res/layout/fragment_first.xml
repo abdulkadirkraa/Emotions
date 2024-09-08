@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/backgorund_1"
+    android:gravity="center"
+    tools:context=".view.onboardingfragments.viewpagerscreens.FirstFragment">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Skip"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:background="@drawable/background_btn"
+        android:layout_gravity="top|end"
+        android:layout_margin="40dp"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchRememberMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="40dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remember Me"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="80dp"
+        android:textAlignment="center"
+        android:textSize="16sp"/>
+    <View
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:background="@color/black"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Duygularının bir amacı var"
+        android:textSize="32sp"
+        android:layout_marginBottom="32dp"
+        android:textColor="@android:color/transparent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:textAlignment="center"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ego'dan kurtulmak"
+        android:textSize="32sp"
+        android:layout_marginBottom="32dp"
+        android:textColor="@android:color/transparent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:textAlignment="center"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bunu başardığında diğer duygularının da kilitlerini kırmış olacaksın"
+        android:textSize="32sp"
+        android:layout_marginBottom="32dp"
+        android:textColor="@android:color/transparent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:textAlignment="center"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Haydi bunun için başlayalım"
+        android:textSize="32sp"
+        android:layout_marginBottom="32dp"
+        android:textColor="@android:color/transparent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:textAlignment="center"
+        android:textStyle="bold"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimation"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/animtwo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="50dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:background="@drawable/background_btn"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="40dp"/>
+
+</FrameLayout>
