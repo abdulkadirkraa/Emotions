@@ -5,7 +5,7 @@ Bu proje, Jetpack Navigation ve ViewBinding kullanarak basit bir kullanıcı ara
 | **Versiyon**            | v1         | v2          |
 |-------------------------|------------|-------------|
 | **Videosu**              | <video src="https://github.com/user-attachments/assets/5bdae665-0c59-40d1-8e82-7e2325b6bfcc" controls width="300"/> | <video src="https://github.com/user-attachments/assets/a7ac2918-fe07-4178-aaba-33ccaee5cfff" controls width="300"/> |
-| **Kullanılan Teknolojiler** | - Jetpack Navigation <br> - ViewBinding | - ViewBinding <br> - Jetpack Navigation <br> - ViewPager |
+| **Kullanılan Teknolojiler** | - Jetpack Navigation <br> - ViewBinding | - ViewBinding <br> - Jetpack Navigation <br> - ViewPager <br> - Lottie Animasyon |
 
 
 
