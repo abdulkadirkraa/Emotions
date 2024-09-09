@@ -3,7 +3,12 @@
 Bu proje, Jetpack Navigation ve ViewBinding kullanarak basit bir kullanıcı arayüzü oluşturmayı amaçlar. Projede altı adet Switch bileşeni ve bir BottomNavigationBar bulunuyor.
 
 ## Proje Vİdeosu
-https://github.com/user-attachments/assets/a7ac2918-fe07-4178-aaba-33ccaee5cfff"
+
+
+
+https://github.com/user-attachments/assets/937beb1b-0e11-4b4d-9d1a-efce4eafbe0c
+
+
 
 ## Kullanılan Teknolojiler
 
