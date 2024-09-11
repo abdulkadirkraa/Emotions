@@ -8,11 +8,7 @@ import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
@@ -25,7 +21,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: HomeFragmentViewModel
     private lateinit var navHostFragment: NavHostFragment
-    private var currentItemIndex: Int = 0 // Geçerli öğenin pozisyonu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,110 +51,8 @@ class MainActivity : AppCompatActivity() {
         aniationDrawable.setExitFadeDuration(3000)
         aniationDrawable.start()
 
-        // Menü öğesi tıklamalarını dinleme
-        binding.bottomNavigationView.setOnItemSelectedListener { item ->
-            val newItemIndex = getItemIndex(item.itemId) // Tıklanan öğenin pozisyonunu al
-            if (newItemIndex != -1) {
-                val direction = getTransitionDirection(currentItemIndex, newItemIndex) // Yönü hesapla
-                currentItemIndex = newItemIndex // Geçerli öğeyi güncelle
-                // `NavController`'a geçişi yönetmesini söyle
-                navHostFragment.navController.navigate(item.itemId, null, getNavOptions(direction))
-            }
-            true
-        }
-
         observeViewModel()
 
-    }
-    private fun getNavOptions(direction: Int): NavOptions {
-        return if (direction == 1) {
-            NavOptions.Builder()
-                .setEnterAnim(R.anim.slide_in_right)
-                .setExitAnim(R.anim.slide_out_left)
-                .setPopEnterAnim(R.anim.slide_in_left)
-                .setPopExitAnim(R.anim.slide_out_right)
-                .build()
-        } else {
-            NavOptions.Builder()
-                .setEnterAnim(R.anim.slide_in_left)
-                .setExitAnim(R.anim.slide_out_right)
-                .setPopEnterAnim(R.anim.slide_in_right)
-                .setPopExitAnim(R.anim.slide_out_left)
-                .build()
-        }
-    }
-
-    private fun switchFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-
-        // Animasyonları ekleyin
-        transaction.setCustomAnimations(
-            R.anim.slide_in_right,  // Yeni fragment'in giriş animasyonu
-            R.anim.slide_out_left,  // Mevcut fragment'in çıkış animasyonu
-            R.anim.slide_in_left,   // Geri dönüşte giriş animasyonu
-            R.anim.slide_out_right  // Geri dönüşte çıkış animasyonu
-        )
-
-        // Fragment'i değiştirin
-        transaction.replace(R.id.navHostFragment, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-    // Fragment'i dinamik yönle değiştir
-    private fun switchFragment(fragment: Fragment, direction: Int) {
-        val transaction = supportFragmentManager.beginTransaction()
-
-        // Geçiş animasyonlarını yönlendirme
-        if (direction == 1) {
-            // Sağdan sola geçiş
-            transaction.setCustomAnimations(
-                R.anim.slide_in_right,
-                R.anim.slide_out_left,
-                R.anim.slide_in_left,
-                R.anim.slide_out_right
-            )
-        } else if (direction == -1) {
-            // Soldan sağa geçiş
-            transaction.setCustomAnimations(
-                R.anim.slide_in_left,
-                R.anim.slide_out_right,
-                R.anim.slide_in_right,
-                R.anim.slide_out_left
-            )
-        }
-
-        transaction.replace(R.id.navHostFragment, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
-    // Tıklanan öğenin pozisyonunu belirle
-    private fun getItemIndex(itemId: Int): Int {
-        return when (itemId) {
-            R.id.happinessFragment -> 0
-            R.id.kindnessFragment -> 1
-            R.id.optimismFragment -> 2
-            R.id.givingFragment -> 3
-            R.id.respectFragment -> 4
-            else -> -1
-        }
-    }
-
-    // İki öğe arasındaki yönü belirle
-    private fun getTransitionDirection(currentIndex: Int, newIndex: Int): Int {
-        return if (newIndex > currentIndex) 1 else -1
-    }
-
-    // ItemId'ye göre fragment'ı getir
-    private fun getFragmentForItem(itemId: Int): Fragment {
-        return when (itemId) {
-            R.id.happinessFragment -> HappinessFragment()
-            R.id.kindnessFragment -> KindnessFragment()
-            R.id.optimismFragment -> OptimismFragment()
-            R.id.givingFragment -> GivingFragment()
-            R.id.respectFragment -> RespectFragment()
-            else -> HomeFragment()
-        }
     }
 
     private fun observeViewModel() {
