@@ -3,33 +3,28 @@ package com.abdulkadirkara.emotions.view
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.Switch
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.abdulkadirkara.emotions.R
 import com.abdulkadirkara.emotions.databinding.FragmentHomeBinding
 import com.abdulkadirkara.emotions.viewmodel.HomeFragmentViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private lateinit var viewModel: HomeFragmentViewModel
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentHomeBinding {
+        return FragmentHomeBinding.inflate(inflater, container, false)
+    }
+
     var activeSwitches = 0
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        Log.e("EGO","HomeFragment-onCreateView")
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,7 +71,7 @@ class HomeFragment : Fragment() {
     }
 
     // Her switch için kontrol: Eğer 4 switch açıksa, Toast göster ve durumu açtırma
-    private fun handleSwitchChange(isChecked: Boolean, switchName: String, switchView: Switch) {
+    private fun handleSwitchChange(isChecked: Boolean, switchName: String, @SuppressLint("UseSwitchCompatOrMaterialCode") switchView: Switch) {
         if (isChecked && getActiveSwitchCount() >= 5) {
             // Maksimum limit mesajı göster ve switch'i tekrar kapalı yap
             Toast.makeText(requireContext(), "Maksimum 4 switch açılabilir", Toast.LENGTH_SHORT).show()
@@ -126,11 +121,5 @@ class HomeFragment : Fragment() {
             switchOptimism.isChecked = false
             switchHappiness.isChecked = false
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.e("EGO","HomeFragment-onDestroyView")
-        _binding = null
     }
 }

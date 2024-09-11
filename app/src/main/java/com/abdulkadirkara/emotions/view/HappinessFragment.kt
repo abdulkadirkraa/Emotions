@@ -1,29 +1,19 @@
 package com.abdulkadirkara.emotions.view
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.abdulkadirkara.emotions.R
-import com.abdulkadirkara.emotions.adapter.ViewPagerAdapter
 import com.abdulkadirkara.emotions.databinding.FragmentHappinessBinding
 
 
-class HappinessFragment : Fragment() {
+class HappinessFragment : BaseViewPagerFragment<FragmentHappinessBinding>() {
 
-    private var _binding: FragmentHappinessBinding? = null
-    private val binding get() = _binding!!
+    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentHappinessBinding {
+        return FragmentHappinessBinding.inflate(inflater, container, false)
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentHappinessBinding.inflate(inflater, container, false)
-
-        // Veriler
-        val titles = listOf(
+    override fun getTitles(): List<String> {
+        return listOf(
             "Mutluluğu tatmanın tek bir yolu vardır: Başkalarına da mutluluk vermek.",
             "Mutlu bir yaşam, dingin bir aklın sonucudur.",
             "Mutluluk, insanın düşündüğü, söylediği ve yaptığı şeylerin uyum içinde olmasıdır.",
@@ -31,8 +21,10 @@ class HappinessFragment : Fragment() {
             "Mutluluk, sahip olduklarını sevmekle olur, istediğin her şeye sahip olmakla değil.",
             "Mutluluğun sırrı, yapılacak doğru şeyi bulmaktan çok, yapılan her şeyde mutluluğu bulmaktır."
         )
+    }
 
-        val texts = listOf(
+    override fun getTexts(): List<String> {
+        return listOf(
             "—John Stuart Mill",
             "—Marcus Aurelius",
             "—Mahatma Gandhi",
@@ -40,7 +32,10 @@ class HappinessFragment : Fragment() {
             "—Leo Tolstoy",
             "—Thomas Carlyle"
         )
-        val animations = listOf(
+    }
+
+    override fun getAnimations(): List<Int> {
+        return listOf(
             R.raw.animthree,
             R.raw.animfour,
             R.raw.animfive,
@@ -48,24 +43,5 @@ class HappinessFragment : Fragment() {
             R.raw.animnine,
             R.raw.animten
         )
-
-        // ViewPager ve Adapter bağlama
-        val viewPager = binding.viewPager
-        val adapter = ViewPagerAdapter(titles, texts, animations)
-        viewPager.adapter = adapter
-
-        // Page margin ve adjacent page'in görünmesini sağlamak için ayarlar
-        viewPager.offscreenPageLimit = 3
-        viewPager.setPageTransformer { page, position ->
-            val scaleFactor = 0.85f.coerceAtLeast(1 - kotlin.math.abs(position))
-            page.scaleY = scaleFactor
-        }
-
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
