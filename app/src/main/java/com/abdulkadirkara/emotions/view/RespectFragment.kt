@@ -1,13 +1,8 @@
 package com.abdulkadirkara.emotions.view
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.abdulkadirkara.emotions.R
-import com.abdulkadirkara.emotions.adapter.ViewPagerAdapter
-import com.abdulkadirkara.emotions.databinding.FragmentOptimismBinding
 import com.abdulkadirkara.emotions.databinding.FragmentRespectBinding
 
 class RespectFragment : BaseViewPagerFragment<FragmentRespectBinding>() {
